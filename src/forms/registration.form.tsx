@@ -1,3 +1,7 @@
+
+"use client";
+
+import { registerUser } from "@/actions/register";
 import { Button, Form, Input } from "@heroui/react";
 import { useState } from "react";
 
@@ -20,7 +24,8 @@ const RegistrationForm = ({ onClose }: IProps) => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-
+  const result = await registerUser(formData)
+  console.log("result",result)
     onClose();
   };
   return (
@@ -60,22 +65,23 @@ const RegistrationForm = ({ onClose }: IProps) => {
         placeholder="Подтвердите ваш пароль"
         type="password"
         value={formData.confirmPassword}
-        onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+        onChange={(e) =>
+          setFormData({ ...formData, confirmPassword: e.target.value })
+        }
         validate={(value) => {
           if (!value) return "Пожалуйста,подтвердите ваш пароль";
-          if (value !== formData.password)
-            return "Пароли не совпадают";
+          if (value !== formData.password) return "Пароли не совпадают";
           return null;
         }}
       />
 
       <div>
         <Button variant="light" onPress={onClose}>
-            Отмена
+          Отмена
         </Button>
 
         <Button color="primary" type="submit">
-            Зарегистрироваться 
+          Зарегистрироваться
         </Button>
       </div>
     </Form>

@@ -14,6 +14,7 @@ import { layoutConfig } from "@/config/layout.config";
 import RegistartionModal from "../modals/registration.modal";
 import LoginModal from "../modals/login.modal";
 import { useState } from "react";
+import { signOutFunc } from "@/actions/sign-out";
 
 export const Logo = () => {
   return (
@@ -23,7 +24,7 @@ export const Logo = () => {
       width={28}
       height={28}
       priority
-    /> 
+    />
   );
 };
 
@@ -33,6 +34,9 @@ export default function Header() {
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
+  const handleSignOut = async () => {
+    await signOutFunc();
+  };
 
   const getNavItems = () => {
     return siteConfig.navItems.map((item) => {
@@ -69,22 +73,37 @@ export default function Header() {
 
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
-        <Button 
-          as={Link} 
-          color="primary" 
-          href="#" 
-          variant="flat"
-          onPress={() => setIsLoginOpen(true)}>
-           Войти
+          <Button
+            as={Link}
+            color="primary"
+            href="#"
+            variant="flat"
+            onPress={handleSignOut}
+          >
+            Выйти
           </Button>
         </NavbarItem>
+
+        <NavbarItem className="hidden lg:flex">
+          <Button
+            as={Link}
+            color="primary"
+            href="#"
+            variant="flat"
+            onPress={() => setIsLoginOpen(true)}
+          >
+            Войти
+          </Button>
+        </NavbarItem>
+
         <NavbarItem>
-          <Button 
-          as={Link} 
-          color="primary" 
-          href="#" 
-          variant="flat"
-          onPress={() => setIsRegistrationOpen(true)}>
+          <Button
+            as={Link}
+            color="primary"
+            href="#"
+            variant="flat"
+            onPress={() => setIsRegistrationOpen(true)}
+          >
             Регистрация
           </Button>
         </NavbarItem>
