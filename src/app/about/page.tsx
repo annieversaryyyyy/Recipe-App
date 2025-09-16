@@ -1,5 +1,11 @@
+import PageContent from "@/components/common/page-content";
+
 const About = () => {
-  return <h1>О нас</h1>;
+  return (
+    <div>
+     <PageContent/>
+    </div>
+  );
 };
 
 export default About;
