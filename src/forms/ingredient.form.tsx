@@ -1,4 +1,5 @@
 "use client";
+import { createIngredient } from "@/actions/ingredient";
 import { CATEGORY_OPTIONS, UNIT_OPTIONS } from "@/constants/select-options";
 import { Button, Select, SelectItem, Input, Form } from "@heroui/react";
 import { useState } from "react";
@@ -12,13 +13,13 @@ const IngredientForm = () => {
     description: "",
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (formData: FormData) => {
     console.log("Form submitted", formData);
+    await createIngredient(formData)
   };
 
   return (
-    <Form className="w-[400px]" onSubmit={handleSubmit}>
+    <Form className="w-[400px]" action={handleSubmit}>
       <Input
         isRequired
         name="name"
@@ -101,7 +102,7 @@ const IngredientForm = () => {
               setFormData({ ...formData, pricePerUnit: value });
             }}
             endContent={
-              <span className="absolute right-3 top-1/2 transform -translate-y-1">
+              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">
                 $
               </span>
             }
