@@ -1,4 +1,5 @@
 "use server";
+
 import { ingredientSchema } from "@/schema/zod";
 import prisma from "@/utils/prisma";
 import { ZodError } from "zod";
@@ -41,7 +42,6 @@ export async function createIngredient(formData: FormData) {
 export async function getIngredients() {
   try {
     const ingredients = await prisma.ingredient.findMany();
-
     return { success: true, ingredients };
   } catch (error) {
     console.error("Ошибка получения ингредиентов:", error);

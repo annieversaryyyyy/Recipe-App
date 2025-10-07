@@ -33,40 +33,45 @@ export default function Header() {
   const pathname = usePathname();
 
   const { isAuth, session, status, setAuthState } = useAuthStore();
-  
-
 
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   const handleSignOut = async () => {
-
-    try{
+    try {
       await signOutFunc();
-    }catch (error){
-      console.log("error with sign out", error)
+    } catch (error) {
+      console.log("error with sign out", error);
     }
-    setAuthState("unauthenticated", null)
+    setAuthState("unauthenticated", null);
   };
 
   const getNavItems = () => {
-    return siteConfig.navItems.map((item) => {
-      const isActive = pathname === item.href;
-      return (
-        <NavbarItem key={item.href}>
-          <Link
-            color="foreground"
-            href={item.href}
-            className={`px-3 py-1
+    return siteConfig.navItems
+      .filter((item) => {
+        if (item.href === "/ingredients") {
+          return isAuth;
+        }
+        return true;
+      })
+      .map((item) => {
+        const isActive = pathname === item.href;
+
+        return (
+          <NavbarItem key={item.href}>
+            <Link
+              color="foreground"
+              href={item.href}
+              className={`px-3 py-1
              ${isActive ? "text-blue-500" : "text-foreground"}
              hover:text-blue-300 hover:border 
             `}
-          >
-            {item.label}
-          </Link>
-        </NavbarItem>
-      );
-    });
+            >
+              {item.label}
+            </Link>
+          </NavbarItem>
+        );
+      });
   };
 
   return (
@@ -83,9 +88,9 @@ export default function Header() {
       </NavbarContent>
       <NavbarContent justify="end">
         {isAuth && <p>Привет, {session?.user?.email}</p>}
-        {status === "loading" ? ( 
-        <p>Загрузка...</p>
-      ) : !isAuth ? (
+        {status === "loading" ? (
+          <p>Загрузка...</p>
+        ) : !isAuth ? (
           <>
             <NavbarItem className="hidden lg:flex">
               <Button

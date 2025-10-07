@@ -15,8 +15,9 @@
     "@heroui/modal": "^2.2.22",
     "@heroui/navbar": "^2.2.23",
     "@heroui/react": "^2.8.3",
-    "@heroui/system": "^2.4.21",
-    "@heroui/theme": "^2.4.21",
+    "@heroui/system": "^2.4.23",
+    "@heroui/table": "^2.2.27",
+    "@heroui/theme": "^2.4.23",
     "@prisma/client": "^6.16.1",
     "@prisma/extension-accelerate": "^2.0.2",
     "bcryptjs": "^3.0.2",
@@ -32,13 +33,13 @@
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
     "prisma": "^6.16.1",
     "tailwindcss": "^4",
     "tsx": "^4.20.5",
-    "typescript": "^5"
+    "typescript": "^5.9.3"
   }
 }

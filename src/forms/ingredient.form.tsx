@@ -1,25 +1,42 @@
 "use client";
-import { createIngredient } from "@/actions/ingredient";
+
 import { CATEGORY_OPTIONS, UNIT_OPTIONS } from "@/constants/select-options";
+import { useIngredientStore } from "@/store/ingredient.store";
 import { Button, Select, SelectItem, Input, Form } from "@heroui/react";
-import { useState } from "react";
+import { useState, useTransition } from "react";
+
+
+const initialState = {
+  name: "",
+  category: "",
+  unit: "",
+  pricePerUnit: null as number | null,
+  description: "",
+};
 
 const IngredientForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    category: "",
-    unit: "",
-    pricePerUnit: null as number | null,
-    description: "",
-  });
+  const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState(initialState);
+  const { addIngredient} = useIngredientStore()
+  const [isPending, startTransition] = useTransition();
 
   const handleSubmit = async (formData: FormData) => {
-    console.log("Form submitted", formData);
-    await createIngredient(formData)
+    startTransition(async () => {
+      await addIngredient(formData);
+      const storeError = useIngredientStore.getState().error;
+
+      if (storeError) {
+        setError(storeError);
+      } else {
+        setError(null);
+        setFormData(initialState);
+      }
+    });
   };
 
   return (
-    <Form className="w-[400px]" action={handleSubmit}>
+    <Form className="w-full " action={handleSubmit}>
+      {error && <p className="text-red-500 mb-4">{error}</p>}
       <Input
         isRequired
         name="name"
@@ -132,7 +149,7 @@ const IngredientForm = () => {
       />
 
       <div className="flex w-full items-center justify-end">
-        <Button color="primary" type="submit">
+        <Button color="primary" type="submit" isLoading={isPending}>
           Добавить ингредиент
         </Button>
       </div>
