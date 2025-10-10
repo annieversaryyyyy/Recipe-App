@@ -11,7 +11,7 @@ export const signInSchema = object({
     .min(6, { message: "Password must be at least 8 characters long" }),
 });
 
-export const ingredientSchema = object({
+export const ingredientSchema = z.object({
   name: string().min(1, "Название обязательно"),
   category: z.enum([
     "VEGETABLES",
@@ -25,12 +25,12 @@ export const ingredientSchema = object({
   unit: z.enum(["GRAMS", "KILOGRAMS", "LITERS", "MILLILITERS", "PIECES"]),
 
   pricePerUnit: z
-    .number({
-      invalid_type_error: "Цена должна быть числом",
-      required_error: "Цена обязательна",
-    })
-    .min(0, { message: "Цена должна быть положительной" })
-    .nullable(),
+  .number({
+    invalid_type_error: "Цена должна быть числом",
+    required_error: "Цена обязательна",
+  })
+  .min(0, { message: "Цена должна быть положительной" })
+  .nullable(),
 
   description: z.string().optional(),
 });
