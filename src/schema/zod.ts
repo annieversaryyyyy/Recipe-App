@@ -25,11 +25,13 @@ export const ingredientSchema = z.object({
   unit: z.enum(["GRAMS", "KILOGRAMS", "LITERS", "MILLILITERS", "PIECES"]),
 
   pricePerUnit: z
-  .number({
-    invalid_type_error: "Цена должна быть числом",
-    required_error: "Цена обязательна",
+  .number()
+  .refine((val) => !isNaN(val), {
+    message: "Цена должна быть числом",
   })
-  .min(0, { message: "Цена должна быть положительной" })
+  .refine((val) => val >= 0, {
+    message: "Цена должна быть положительной",
+  })
   .nullable(),
 
   description: z.string().optional(),
